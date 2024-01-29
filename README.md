@@ -1,10 +1,9 @@
-# tiny-sql-viewer
+<div align="center">
+<h1>Tiny SQL Viewer</h1>
+</div>
 
-An Electron application with React and TypeScript
+Tiny SQL Viewer is a simple SQL database client, currently targeting SQLite. It provides an easy way to view and query your database.
 
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Project Setup
 
