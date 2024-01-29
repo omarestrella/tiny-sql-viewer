@@ -1,8 +1,14 @@
 import { electronApp, is, optimizer } from "@electron-toolkit/utils"
-import { app, BrowserWindow, shell } from "electron"
+import { DatabaseChannel, FilesChannel } from "@preload/events"
+import crypto from "crypto"
+import { app, BrowserWindow, dialog, ipcMain, shell } from "electron"
 import { join } from "path"
 
 import icon from "../../resources/icon.png?asset"
+import { getDatabaseAdapter } from "./databases"
+import { DatabaseAdapter } from "./databases/adapter"
+
+const activeDatabaseAdapters = new Map<string, DatabaseAdapter>()
 
 function createWindow(): void {
   // Create the browser window.
@@ -37,9 +43,6 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId("com.electron")
@@ -54,20 +57,42 @@ app.whenReady().then(() => {
   createWindow()
 
   app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+
+  ipcMain.handle(DatabaseChannel.Connect, async (_, type: string, connectionDetails: unknown) => {
+    const adapter = getDatabaseAdapter(type)
+    const id = crypto.randomUUID()
+    console.log("connecting:", type, connectionDetails)
+    await adapter.connect(connectionDetails)
+    activeDatabaseAdapters.set(id, adapter)
+    return id
+  })
+
+  ipcMain.handle(DatabaseChannel.GetTables, async (_, id: string) => {
+    const tables = await activeDatabaseAdapters.get(id)?.getTables()
+    return tables ?? []
+  })
+
+  ipcMain.handle(DatabaseChannel.RunSql, async (_, id: string, sql: string) => {
+    const results = await activeDatabaseAdapters.get(id)?.runSql(sql)
+    return results ?? []
+  })
+
+  ipcMain.handle(FilesChannel.OpenFileDialog, async () => {
+    const { filePaths } = await dialog.showOpenDialog({ properties: ["openFile"] })
+    return filePaths[0] ?? null
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+app.on("before-quit", async () => {
+  for (const adapter of activeDatabaseAdapters.values()) {
+    await adapter.close()
+  }
+})
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.

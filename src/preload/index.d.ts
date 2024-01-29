@@ -1,8 +1,14 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
+import { ElectronAPI } from "@electron-toolkit/preload"
+
+import { DatabaseAPI } from "./database"
+import { FilesAPI } from "./files"
 
 declare global {
   interface Window {
     electron: ElectronAPI
-    api: unknown
+    api: {
+      database: DatabaseAPI
+      files: FilesAPI
+    }
   }
 }
