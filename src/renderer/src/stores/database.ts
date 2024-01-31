@@ -41,8 +41,16 @@ class DatabaseStore extends Store<Data> {
     })
   }
 
-  selectTable(table: Table) {
-    this.setState((current) => ({ ...current, currentTable: table }))
+  selectTable(tableName: string) {
+    const table = this.tables.find((t) => t.name === tableName)
+
+    if (table) {
+      this.setState((current) => ({ ...current, currentTable: table }))
+    }
+  }
+
+  get tables() {
+    return this.state.tables
   }
 }
 

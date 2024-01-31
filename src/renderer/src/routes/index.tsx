@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 
-import { databaseStore } from "@/stores/database"
 import { encodeDatabasePath } from "@/utils/path"
 import { cn } from "@/utils/styles"
 
@@ -28,7 +27,13 @@ function Index() {
           return
         }
 
-        databaseStore.loadDatabase(file.path)
+        const encodedPath = encodeDatabasePath(file.path)
+        navigate({
+          to: "/database/$path",
+          params: {
+            path: encodedPath
+          }
+        })
       }}
     >
       <button
