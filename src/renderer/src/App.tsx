@@ -7,7 +7,7 @@ import { databaseStore } from "./stores/database"
 import { cn } from "./utils/styles"
 
 function App(): JSX.Element {
-  const store = useStore(databaseStore.store)
+  const store = useStore(databaseStore)
 
   return (
     <div className={cn("grid size-full", store.path ? "grid-cols-[200px,_1fr]" : "grid-cols-1")}>

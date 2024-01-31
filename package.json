@@ -23,7 +23,9 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "@tanstack/react-router": "^1.15.5",
     "@tanstack/react-store": "^0.3.1",
+    "@tanstack/react-table": "^8.11.7",
     "better-sqlite3": "^9.3.0",
     "clsx": "^2.1.0",
     "electron-updater": "^6.1.7",
