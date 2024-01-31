@@ -1,20 +1,16 @@
-import { useStore } from "@tanstack/react-store"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 
-import { TableViewer } from "./components/TableViewer"
-import { databaseStore } from "./stores/database"
-import { cn } from "./utils/styles"
+import { databaseStore } from "@/stores/database"
+import { encodeDatabasePath } from "@/utils/path"
+import { cn } from "@/utils/styles"
 
-export function MainView() {
-  const store = useStore(databaseStore)
+function Index() {
+  const navigate = useNavigate({ from: "/" })
 
   const [selectingDatabase, setSelectingDatabase] = useState(false)
 
-  return store.path ? (
-    <div className="size-full overflow-auto">
-      <TableViewer databaseTable={store.currentTable} />
-    </div>
-  ) : (
+  return (
     <div
       className={cn(
         "flex size-full items-center justify-center",
@@ -41,7 +37,13 @@ export function MainView() {
           setSelectingDatabase(true)
           const path = await window.api.files.openFileDialog()
           if (path) {
-            databaseStore.loadDatabase(path)
+            const encodedPath = encodeDatabasePath(path)
+            navigate({
+              to: "/database/$path",
+              params: {
+                path: encodedPath
+              }
+            })
           }
           setSelectingDatabase(false)
         }}
@@ -51,3 +53,7 @@ export function MainView() {
     </div>
   )
 }
+
+export const Route = createFileRoute("/")({
+  component: Index
+})

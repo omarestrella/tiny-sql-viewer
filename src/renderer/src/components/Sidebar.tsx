@@ -1,5 +1,6 @@
-import { databaseStore } from "@renderer/stores/database"
 import { useStore } from "@tanstack/react-store"
+
+import { databaseStore } from "@/stores/database"
 
 export function Sidebar() {
   const store = useStore(databaseStore)

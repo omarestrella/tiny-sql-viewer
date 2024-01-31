@@ -35,6 +35,8 @@
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
     "@electron-toolkit/eslint-config-ts": "^1.0.1",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@tanstack/router-devtools": "^1.15.7",
+    "@tanstack/router-vite-plugin": "^1.15.4",
     "@types/better-sqlite3": "^7.6.9",
     "@types/node": "^18.19.9",
     "@types/react": "^18.2.48",

@@ -1,3 +1,4 @@
+import { TanStackRouterVite } from "@tanstack/router-vite-plugin"
 import react from "@vitejs/plugin-react"
 import { defineConfig, externalizeDepsPlugin } from "electron-vite"
 import { resolve } from "path"
@@ -24,9 +25,15 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        "@renderer": resolve("src/renderer/src")
+        "@": resolve("src/renderer/src")
       }
     },
-    plugins: [react()]
+    plugins: [
+      TanStackRouterVite({
+        routesDirectory: "src/renderer/src/routes",
+        generatedRouteTree: "src/renderer/src/routeTree.gen.ts"
+      }),
+      react()
+    ]
   }
 })
