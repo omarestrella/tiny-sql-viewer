@@ -35,7 +35,8 @@
     "codemirror": "^6.0.1",
     "electron-updater": "^6.1.7",
     "lucide-react": "^0.323.0",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "thememirror": "^2.0.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",

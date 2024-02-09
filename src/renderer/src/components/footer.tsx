@@ -13,6 +13,13 @@ export function Footer() {
       {store.path ? (
         <Link
           to="/database/$path/sql"
+          mask={{
+            to: "/database/$path",
+            unmaskOnReload: true,
+            params: {
+              path: encodeDatabasePath(store.path)
+            }
+          }}
           params={{
             path: encodeDatabasePath(store.path)
           }}

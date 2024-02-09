@@ -4,8 +4,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as DatabaseSqlImport } from './routes/database/sql'
 import { Route as DatabasePathImport } from './routes/database/$path'
+import { Route as DatabasePathSqlImport } from './routes/database/_$path/sql'
 
 // Create/Update Routes
 
@@ -14,13 +14,13 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DatabaseSqlRoute = DatabaseSqlImport.update({
-  path: '/database/sql',
+const DatabasePathRoute = DatabasePathImport.update({
+  path: '/database/$path',
   getParentRoute: () => rootRoute,
 } as any)
 
-const DatabasePathRoute = DatabasePathImport.update({
-  path: '/database/$path',
+const DatabasePathSqlRoute = DatabasePathSqlImport.update({
+  path: '/database/$path/sql',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -36,8 +36,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DatabasePathImport
       parentRoute: typeof rootRoute
     }
-    '/database/sql': {
-      preLoaderRoute: typeof DatabaseSqlImport
+    '/database/_$path/sql': {
+      preLoaderRoute: typeof DatabasePathSqlImport
       parentRoute: typeof rootRoute
     }
   }
@@ -48,5 +48,5 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   DatabasePathRoute,
-  DatabaseSqlRoute,
+  DatabasePathSqlRoute,
 ])
