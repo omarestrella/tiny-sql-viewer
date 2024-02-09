@@ -29,7 +29,7 @@ function DatabaseView() {
   const store = useStore(databaseStore)
 
   return (
-    <div className="size-full overflow-auto">
+    <div className="grid size-full overflow-auto">
       <TableViewer databaseTable={store.currentTable} />
     </div>
   )

@@ -2,32 +2,42 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root"
-import { Route as DatabasePathImport } from "./routes/database/$path"
-import { Route as IndexImport } from "./routes/index"
+import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
+import { Route as DatabaseSqlImport } from './routes/database/sql'
+import { Route as DatabasePathImport } from './routes/database/$path'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
-  path: "/",
-  getParentRoute: () => rootRoute
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DatabaseSqlRoute = DatabaseSqlImport.update({
+  path: '/database/sql',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const DatabasePathRoute = DatabasePathImport.update({
-  path: "/database/$path",
-  getParentRoute: () => rootRoute
+  path: '/database/$path',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
+    '/': {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    "/database/$path": {
+    '/database/$path': {
       preLoaderRoute: typeof DatabasePathImport
+      parentRoute: typeof rootRoute
+    }
+    '/database/sql': {
+      preLoaderRoute: typeof DatabaseSqlImport
       parentRoute: typeof rootRoute
     }
   }
@@ -35,4 +45,8 @@ declare module "@tanstack/react-router" {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, DatabasePathRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  DatabasePathRoute,
+  DatabaseSqlRoute,
+])

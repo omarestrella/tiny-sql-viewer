@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { useStore } from "@tanstack/react-store"
+import { LucidePanelLeft } from "lucide-react"
 
 import { databaseStore } from "@/stores/database"
 import { encodeDatabasePath } from "@/utils/path"
@@ -12,8 +13,13 @@ export function Sidebar() {
   }
 
   return (
-    <div className="size-full bg-gray-200 pt-8">
-      <div className="size-full p-2">
+    <div className="flex size-full flex-col bg-gray-100">
+      <div className="flex h-10 w-full items-center justify-end pr-2">
+        <button className="hover:text-sky-500">
+          <LucidePanelLeft size={16} />
+        </button>
+      </div>
+      <div className="size-full px-2">
         {store.tables.map((table) => {
           return (
             <div key={table.name}>
