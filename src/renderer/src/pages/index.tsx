@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import { encodeDatabasePath } from "@/utils/path"
 import { cn } from "@/utils/styles"
 
-function Index() {
-  const navigate = useNavigate({ from: "/" })
+export function Index() {
+  const navigate = useNavigate()
 
   const [selectingDatabase, setSelectingDatabase] = useState(false)
 
@@ -28,12 +28,7 @@ function Index() {
         }
 
         const encodedPath = encodeDatabasePath(file.path)
-        navigate({
-          to: "/database/$path",
-          params: {
-            path: encodedPath
-          }
-        })
+        navigate(`/database/${encodedPath}`)
       }}
     >
       <button
@@ -43,12 +38,7 @@ function Index() {
           const path = await window.api.files.openFileDialog()
           if (path) {
             const encodedPath = encodeDatabasePath(path)
-            navigate({
-              to: "/database/$path",
-              params: {
-                path: encodedPath
-              }
-            })
+            navigate(`/database/${encodedPath}`)
           }
           setSelectingDatabase(false)
         }}
@@ -58,7 +48,3 @@ function Index() {
     </div>
   )
 }
-
-export const Route = createFileRoute("/")({
-  component: Index
-})

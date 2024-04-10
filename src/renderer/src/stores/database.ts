@@ -30,18 +30,25 @@ class DatabaseStore extends Store<Data> {
   async loadDatabase(path: string) {
     this.currentDatabaseID = await window.api.database.connect("sqlite", path)
     const tables = await window.api.database.getTables(this.currentDatabaseID)
-    console.log(tables)
+    console.groupCollapsed("DatabaseStore.loadDatabase")
+    console.debug(tables)
+    console.groupEnd()
     this.setState((current) => {
       return {
         ...current,
         path,
         tables,
-        currentTable: tables[0] ?? null
+        currentTable: tables[0] || null
       }
     })
+    return tables
   }
 
   selectTable(tableName: string) {
+    if (this.state.currentTable?.name === tableName) {
+      return
+    }
+
     const table = this.tables.find((t) => t.name === tableName)
 
     if (table) {
