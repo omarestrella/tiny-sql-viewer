@@ -38,7 +38,7 @@ export class SQLiteAdapter extends DatabaseAdapter {
     })
   }
 
-  runSql(_sql: string): Promise<unknown> {
-    throw new Error("Method not implemented.")
+  async runSql(sql: string): Promise<unknown> {
+    return this.#database?.prepare(sql).all()
   }
 }

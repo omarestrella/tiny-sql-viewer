@@ -59,6 +59,13 @@ class DatabaseStore extends Store<Data> {
   get tables() {
     return this.state.tables
   }
+
+  async runSQL(sql: string) {
+    if (!this.currentDatabaseID) {
+      return []
+    }
+    return await window.api.database.runSQL(this.currentDatabaseID, sql)
+  }
 }
 
 export const databaseStore = new DatabaseStore()

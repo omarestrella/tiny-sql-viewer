@@ -1,6 +1,6 @@
 import { useStore } from "@tanstack/react-store"
 import { LucidePanelLeft } from "lucide-react"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 import { databaseStore } from "@/stores/database"
 import { encodeDatabasePath } from "@/utils/path"
@@ -23,8 +23,15 @@ export function Sidebar() {
         {store.tables.map((table) => {
           const dbPath = `/database/${encodeDatabasePath(store.path!)}/table/${table.name}`
           return (
-            <div key={table.name}>
-              <Link to={dbPath}>{table.name}</Link>
+            <div key={table.name} className="font-mono text-sm">
+              <NavLink
+                className={({ isActive }) => {
+                  return isActive ? "text-sky-500" : "text-gray-800"
+                }}
+                to={dbPath}
+              >
+                {table.name}
+              </NavLink>
             </div>
           )
         })}

@@ -23,7 +23,7 @@ export function App() {
             <Sidebar />
           </div>
         ) : null}
-        <div className="grid grid-rows-[min-content,_minmax(0,_1fr),_24px]">
+        <div className="grid h-screen grid-rows-[min-content,_minmax(0,_1fr),_24px] overflow-hidden">
           <Titlebar />
           <Outlet />
           {store.path ? <Footer /> : null}

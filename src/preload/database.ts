@@ -10,7 +10,7 @@ export const API = {
   async getTables(connectionID: string) {
     return ipcRenderer.invoke(DatabaseChannel.GetTables, connectionID)
   },
-  async runSql(connectionID: string, sql: string) {
+  async runSQL(connectionID: string, sql: string) {
     return ipcRenderer.invoke(DatabaseChannel.RunSql, connectionID, sql)
   }
 } satisfies DatabaseAPI
@@ -18,5 +18,5 @@ export const API = {
 export interface DatabaseAPI {
   connect(type: string, connectionDetails: unknown): Promise<string>
   getTables(connectionID: string): Promise<Table[]>
-  runSql(connectionID: string, sql: string): Promise<unknown>
+  runSQL(connectionID: string, sql: string): Promise<unknown>
 }

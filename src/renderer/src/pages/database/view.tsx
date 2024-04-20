@@ -1,5 +1,5 @@
 import { useStore } from "@tanstack/react-store"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useParams, useSearchParams } from "react-router-dom"
 
 import { SQLView } from "@/components/sql-view"
@@ -11,15 +11,24 @@ export function DatabaseView() {
   const params = useParams<{ table: string }>()
   const [search] = useSearchParams()
 
+  const [data, setData] = useState<Record<string, unknown>[]>([])
+
   useEffect(() => {
     if (params.table) {
       databaseStore.selectTable(params.table)
+      databaseStore.runSQL(`SELECT * FROM ${params.table}`).then((results) => {
+        setData(results as Record<string, unknown>[])
+      })
     }
   }, [params])
 
-  return (
-    <div className="grid size-full overflow-auto">
-      {search.get("sql") != null ? <SQLView /> : <TableViewer databaseTable={store.currentTable} />}
+  return params.table ? (
+    <div className="grid size-full">
+      {search.get("sql") != null ? (
+        <SQLView initialTable={params.table} />
+      ) : (
+        <TableViewer databaseTable={store.currentTable} data={data} />
+      )}
     </div>
-  )
+  ) : null
 }
