@@ -1,0 +1,10 @@
+.ag-theme-alpine[data-id="table-viewer"] {
+  --ag-font-family: theme(fontFamily.body);
+  --ag-font-size: theme(fontSize.xs);
+
+  --ag-data-color: theme(colors.gray.800);
+  --ag-foreground-color: theme(colors.gray.800);
+
+  --ag-borders: none;
+  --ag-row-border-width: 1px;
+}

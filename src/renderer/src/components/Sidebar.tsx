@@ -26,9 +26,14 @@ export function Sidebar() {
             <div key={table.name} className="font-mono text-sm">
               <NavLink
                 className={({ isActive }) => {
-                  return isActive ? "text-sky-500" : "text-gray-800"
+                  return isActive ? "text-sky-500 is-active" : "text-gray-800"
                 }}
                 to={dbPath}
+                onClick={(e) => {
+                  if ((e.target as HTMLAnchorElement).classList.contains("is-active")) {
+                    e.preventDefault()
+                  }
+                }}
               >
                 {table.name}
               </NavLink>

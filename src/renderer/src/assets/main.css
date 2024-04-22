@@ -1,6 +1,7 @@
 @import "./base.css";
 @import "./fonts/inter.css";
 @import "./fonts/jetbrains-mono.css";
+@import "./table.css";
 
 :root {
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

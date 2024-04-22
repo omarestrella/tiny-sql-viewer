@@ -43,7 +43,7 @@ function Toolbar({ editorView }: { editorView: EditorView | null }) {
         </button>
       </div>
       {results ? (
-        <div className="max-h-96 border-t">
+        <div className="h-96 border-t">
           <TableViewer databaseTable={databaseStore.state.currentTable} data={results} />
         </div>
       ) : null}
